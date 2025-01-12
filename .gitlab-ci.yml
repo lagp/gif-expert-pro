@@ -4,18 +4,35 @@ cache:
   paths:
     - node_modules/
 
-before_script:
-  - yarn install
-
 stages:
   - build
+  - test
+  - deploy
 
-build-app:
+app-build:
   stage: build
   script:
-    - yarn run build
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - dist/
+
+pages:
+  stage: deploy
+  dependencies:
+    - app-build
+  script:
+    - mv dist/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - main
 
 sast:
   stage: build
 include:
+  - template: Security/SAST.gitlab-ci.yml
   - template: Security/SAST.gitlab-ci.yml
