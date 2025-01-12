@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { AddCategory } from './components/AddCategory';
+import { AddCategory, GifGrid } from './components'
 
 const GifExpertApp = () => {
-  const [categories, setCategories] = useState(['One Punch', 'Dragon Ball']);
+  const [categories, setCategories] = useState<string[]>([]);
 
   const onAddCategory = useCallback(( newCategory: string) => {
     if (!categories.includes(newCategory)) {
@@ -14,11 +14,11 @@ const GifExpertApp = () => {
     <>
       <h1>GifExpertApp</h1>
       <AddCategory onNewCategory={ onAddCategory } />
-      <ol>
-        {categories.map((category: string) => {
-          return <li key={category}>{category}</li>;
-        })}
-      </ol>
+      {
+        categories.map((category: string) => (
+            <GifGrid key={ category } category={ category }/>
+        ))
+      }
     </>
   );
 };
