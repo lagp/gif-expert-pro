@@ -9,10 +9,14 @@ interface FetchGifProps {
 
 export const useFetchGifs = ({ category }: FetchGifProps) => {
   const [images, setImages] = useState<Gif[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const getImages = useCallback(() => {
     getGifs(category)
-      .then(newImages => setImages(newImages))
+      .then(newImages => {
+        setImages(newImages)
+        setIsLoading(false)
+      })
       .catch(error => console.log(error))
   }, [category])
 
@@ -22,7 +26,7 @@ export const useFetchGifs = ({ category }: FetchGifProps) => {
 
   return {
     images: images,
-    isLoading: true,
+    isLoading: isLoading,
   }
 }
 
