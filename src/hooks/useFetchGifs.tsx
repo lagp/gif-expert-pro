@@ -1,31 +1,31 @@
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
-import { getGifs, Gif } from '../helpers/getGifs';
+import PropTypes from 'prop-types'
+import { useCallback, useEffect, useState } from 'react'
+
+import { getGifs, Gif } from '../helpers/getGifs'
 
 interface FetchGifProps {
   category: string
 }
 
-export const useFetchGifs = ( {category}: FetchGifProps ) => {
+export const useFetchGifs = ({ category }: FetchGifProps) => {
+  const [images, setImages] = useState<Gif[]>([])
 
-  const [images, setImages] = useState<Gif[]>([]);
-
-  const getImages = () => {
+  const getImages = useCallback(() => {
     getGifs(category)
-      .then((newImages) => setImages(newImages))
-      .catch((error) => console.log(error));
-  }
+      .then(newImages => setImages(newImages))
+      .catch(error => console.log(error))
+  }, [category])
 
   useEffect(() => {
     getImages()
-  }, []);
+  }, [getImages])
 
   return {
     images: images,
-    isLoading: true
+    isLoading: true,
   }
 }
 
 useFetchGifs.propTypes = {
-  category: PropTypes.string.isRequired
+  category: PropTypes.string.isRequired,
 }

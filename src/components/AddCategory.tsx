@@ -1,34 +1,29 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 interface AddCategoryProps {
-  onNewCategory: (category: string) => void;
+  onNewCategory: (category: string) => void
 }
 
-export const AddCategory = ({onNewCategory}: AddCategoryProps )=> {
-  const [inputValue, setInputValue] = useState('');
+export const AddCategory = ({ onNewCategory }: AddCategoryProps) => {
+  const [inputValue, setInputValue] = useState('')
 
-  const onInputChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(target.value);
+  const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(target.value)
   }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     if (inputValue.trim().length <= 1) {
-      return;
+      return
     }
 
-    onNewCategory(inputValue.trim());
-    setInputValue('');
+    onNewCategory(inputValue.trim())
+    setInputValue('')
   }
 
   return (
     <form onSubmit={onSubmit}>
-      <input
-        type='text'
-        placeholder='Buscar gifs'
-        value={inputValue}
-        onChange={onInputChange}
-      />
+      <input type='text' placeholder='Buscar gifs' value={inputValue} onChange={onInputChange} />
     </form>
   )
 }
