@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 interface AddCategoryProps {
@@ -26,4 +27,8 @@ export const AddCategory = ({ onNewCategory }: AddCategoryProps) => {
       <input type='text' placeholder='Buscar gifs' value={inputValue} onChange={onInputChange} />
     </form>
   )
+}
+
+AddCategory.prototype = {
+  onNewCategory: PropTypes.func.isRequired,
 }
